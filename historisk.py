@@ -38,4 +38,4 @@ fig.update_traces(line_shape='hv', selector=dict(type='scatter'))
 fig.update_layout(
     title="EL spot priser", xaxis_title="CEST", yaxis_title="NOK/MWh"
 )
-fig.write_html("nordpool.html")
+fig.write_html("historisk.html")
