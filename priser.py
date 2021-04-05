@@ -1,32 +1,40 @@
 import csv
-import numpy as np
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 
 
 time_series = dict()
-with open('data/elspot/2021.csv', 'r') as csvfile: 
-    new_values = []
-    market_prices = csv.reader(csvfile)
-    # Finding headers
-    for row in market_prices:
-        if row[1] == 'Hours':
-            headers = row[2:]
-            break
+years = list(range(2015, 2022))
+for year in years:
+    with open(f"data/elspot/{year}.csv", "r") as csvfile:
+        new_values = []
+        market_prices = csv.reader(csvfile)
+        # Finding headers
+        for row in market_prices:
+            if row[1] == "Hours":
+                headers = row[2:]
+                break
+        for h in headers:
+            if h not in time_series:
+                time_series[h] = [[], []]
+        for j, row in enumerate(market_prices):
+            date_str = row[0].split("-")
+            date = f"{date_str[2]}-{date_str[1]}-{date_str[0]}"
+            hour = row[1][:2]
+            for i, h in enumerate(headers):
+                v = row[i + 2]
+                value = float(v.replace(",", ".")) if v else float("nan")
+                time_series[h][0].append(f"{date}T{hour}")
+                time_series[h][1].append(value)
 
-    time_series = {h: [[], []] for h in headers}
-    for j, row in enumerate(market_prices):
-        date_str = row[0].split('-')
-        date = f'{date_str[2]}-{date_str[1]}-{date_str[0]}'
-        hour = row[1][:2]
-        for i, h in enumerate(headers):
-            v = row[i + 2]
-            value = float(v.replace(',','.')) if v else float('nan')
-            time_series[h][0].append(f'{date}T{hour}')
-            time_series[h][1].append(value)
 
-
-t = np.array(time_series['Oslo'][0], dtype='datetime64')
-v = np.array(time_series['Oslo'][1])
-
-plt.plot(t, v)
-plt.show()
+historic_fig = go.Figure()
+areas = ['Oslo', 'Molde']
+for area in areas:
+    area_data = time_series[area]
+    historic_fig.add_trace(
+        go.Scatter(x=area_data[0], y=area_data[1], mode="lines", name=area)
+    )
+historic_fig.update_layout(
+    title="EL spot priser", xaxis_title="CEST", yaxis_title="NOK/MWh"
+)
+historic_fig.write_html("nordpool.html")
