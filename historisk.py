@@ -27,14 +27,15 @@ for year in years:
                 time_series[h][1].append(value)
 
 
-historic_fig = go.Figure()
+fig = go.Figure()
 areas = ['Oslo', 'Molde']
 for area in areas:
     area_data = time_series[area]
-    historic_fig.add_trace(
+    fig.add_trace(
         go.Scatter(x=area_data[0], y=area_data[1], mode="lines", name=area)
     )
-historic_fig.update_layout(
+fig.update_traces(line_shape='hv', selector=dict(type='scatter'))
+fig.update_layout(
     title="EL spot priser", xaxis_title="CEST", yaxis_title="NOK/MWh"
 )
-historic_fig.write_html("nordpool.html")
+fig.write_html("nordpool.html")

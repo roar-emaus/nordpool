@@ -21,8 +21,9 @@ areas = ['Oslo', 'Molde']
 for area in areas:
     area_data = time_series[area]
     fig.add_trace(
-        go.Scatter(x=area_data[0], y=area_data[1], mode="lines+markers", name=area)
+        go.Scatter(x=area_data[0], y=area_data[1], mode="lines+markers",  name=area)
     )
+fig.update_traces(line_shape='hv', selector=dict(type='scatter'))
 fig.update_layout(
     title="Morgendages ELSpot priser", xaxis_title="CEST", yaxis_title="NOK/MWh"
 )
