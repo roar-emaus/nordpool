@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 
 
 time_series = dict()
-years = list(range(2015, 2022))
+years = list(range(2021, 2022))
 for year in years:
     with open(f"data/elspot/{year}.csv", "r") as csvfile:
         new_values = []
