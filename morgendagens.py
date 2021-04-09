@@ -1,4 +1,6 @@
 import json
+import plotly
+plotly.io.orca.config.executable = '/home/roar/projects/nordpool/__pypackages__/3.9/bin/orca'
 import plotly.graph_objects as go
 
 
@@ -28,4 +30,4 @@ fig.update_layout(
     title="Morgendages ELSpot priser", xaxis_title="CEST", yaxis_title="NOK/MWh"
 )
 fig.write_html("morgendagens.html")
-
+fig.write_image('morgendagens.png', width=1920, height=1080)
