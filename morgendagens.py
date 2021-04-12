@@ -29,5 +29,5 @@ fig.update_traces(line_shape='hv', selector=dict(type='scatter'))
 fig.update_layout(
     title='Morgendages ELSpot priser', xaxis_title='CEST', yaxis_title='NOK/MWh'
 )
-fig.write_html('morgendagens.html')
+fig.write_html("morgendagens.html")
 #fig.write_image('morgendagens.png', width=1920, height=1080)
