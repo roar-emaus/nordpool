@@ -1,0 +1,4 @@
+*
+!.gitignore
+!download_historic.py
+!download_next_day.py
